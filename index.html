@@ -67,6 +67,14 @@
                                 <span id="error" class="hidden"></span>
                             </div>
 
+                            <div class="api-div" id="api-speechsynthesis">
+                                <span id="ss-unsupported" class="api-support hidden">Speech synthesis not supported</span>
+                                <h2>Speech synthesis API</h2>
+                                <blockquote>
+                                    <p>Repeats 'Please turn off the notification' text every 5s.</p>
+                                </blockquote>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -136,6 +144,21 @@
                 document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
             }
             navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+       }
+       if (window.SpeechSynthesisUtterance === undefined) {
+            document.getElementById('ss-unsupported').classList.remove('hidden');
+       }
+       else {
+            function InitiateSpeaking() {
+               var utterance = new SpeechSynthesisUtterance();
+               utterance.text = "Please turn off the notification";
+               utterance.voice = "Google US English";
+               utterance.lang = "en-US";
+               utterance.rate = 1;
+               utterance.pitch = 1;
+               window.speechSynthesis.speak(utterance);
+            }
+            setTimeout(InitiateSpeaking, 5000);
        }
     </script>
   </body>

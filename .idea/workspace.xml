@@ -74,8 +74,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5273632">
-              <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4278607">
+              <caret line="149" column="8" selection-start-line="149" selection-start-column="8" selection-end-line="149" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -384,7 +384,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456549705293</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="adding geolocation api call">
+      <created>1456550262081</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1456550262081</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -428,7 +434,8 @@
     <MESSAGE value="Modifying project name and desc 4" />
     <MESSAGE value="adding unsupported detection" />
     <MESSAGE value="adding code for geolocation api" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding code for geolocation api" />
+    <MESSAGE value="adding geolocation api call" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding geolocation api call" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -482,8 +489,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5273632">
-          <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4278607">
+          <caret line="149" column="8" selection-start-line="149" selection-start-column="8" selection-end-line="149" selection-end-column="8" />
           <folding />
         </state>
       </provider>
