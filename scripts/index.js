@@ -6,6 +6,7 @@ var ip = '192.168.1.125', // node server ip
 port = ':8080';
 
 $.ready(function() {
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>before calling sockjs";
     var sockjs_url = 'http://192.168.1.125:9999/echo';
     var sockjs = new SockJS(sockjs_url);
     document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready and sockjs in action";
