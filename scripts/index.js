@@ -81,6 +81,13 @@ function InitDeviceMonitoring() {
 
              document.getElementById('interval').innerHTML = event.interval;
              var timenow = getDateTime();
+
+             if(!accelerometerData.hasOwnProperty('accX')) {
+                accelerometerData['accX'] = [];
+                accelerometerData['accY'] = [];
+                accelerometerData['accZ'] = [];
+             }
+
              accelerometerData['accX'].push({
                 'timestamp' : timenow,
                 'value' : Math.round(event.acceleration.x)
@@ -117,6 +124,11 @@ function InitDeviceMonitoring() {
 
          document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
          var timenow = getDateTime();
+         if(!gpsData.hasOwnProperty('lat')) {
+             accelerometerData['lat'] = [];
+             accelerometerData['long'] = [];
+         }
+
          gpsData['lat'].push({
              'timestamp' : timenow,
              'value' : position.coords.latitude
