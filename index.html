@@ -74,6 +74,7 @@
                                     <p>Repeats 'Please turn off the notification' text every 5s.</p>
                                 </blockquote>
                             </div>
+                            <div id="debug"></div>
 
                         </div>
                     </div>
@@ -124,8 +125,11 @@
 
        if (!(window.navigator && window.navigator.geolocation)) {
             document.getElementById('g-unsupported').classList.remove('hidden');
+            document.getElementById('debug').innerHTML = "geolocation api not supported";
        }
        else {
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "geolocation supported";
+
             var positionOptions = {
                enableHighAccuracy: true,
                timeout: 10 * 1000, // 10 seconds
@@ -143,12 +147,18 @@
                 document.getElementById('error').classList.remove('hidden');
                 document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
             }
-            navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+            setTimeout(function() {
+                navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+            }, 3000);
        }
        if (window.SpeechSynthesisUtterance === undefined) {
             document.getElementById('ss-unsupported').classList.remove('hidden');
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "speech synthesis supported";
+
        }
        else {
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "speech synthesis supported";
+
             function InitiateSpeaking() {
                var utterance = new SpeechSynthesisUtterance();
                utterance.text = "Please turn off the notification";
