@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="styles/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main">
+          <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper">
+              <div class="gn-scroller">
+                <ul class="gn-menu">
+                  <li class="gn-search-item">
+                    <input placeholder="Search" type="search" class="gn-search">
+                    <a class="gn-icon gn-icon-search"><span>Search</span></a>
+                  </li>
+                  <li><a href="index.html" class="gn-icon gn-icon-download">Home</a></li>
+                  <li><a href="about.html" class="gn-icon gn-icon-download">About</a></li>
+                </ul>
+              </div><!-- /gn-scroller -->
+            </nav>
+          </li>
+          <li><a href="index.html">Kinetic SOS</a></li>
+        </ul>
+    </div>
+
+    <div class="heading-about marginbot-50">
+      <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="section-heading">
+            <br><br><br>
+            <h2>About</h2>
+            <div id="content">
+              <div class="api-div" id="api-accelerometer">
+                <h2>Accelerometer</h2>
+                <blockquote>
+                  <p>Captures device motion in the x, y, and z direction.</p>
+                </blockquote>
+                <h4 class="help"><b>Toggle</b> to stop/start
+                  accelerometer watch.<br/><b>Get Current</b> for one-time accelerometer reading.</h4>
+                <a class="btn deux" onclick="toggleAccel();">Toggle</a>
+                <a class="btn deux" onclick="getAccel();">Get Current</a>
+                <dl id="accel-data">
+                  <dt>X:</dt><dd id="x">&nbsp;&nbsp;&nbsp;</dd>
+                  <dt>Y:</dt><dd id="y">&nbsp;&nbsp;&nbsp;</dd>
+                  <dt>Z:</dt><dd id="z">&nbsp;&nbsp;&nbsp;</dd>
+                </dl>
+                <div>Timestamp: <b id="accel_timestamp">0</b></div>
+              </div>
+
+              <div class="api-div" id="api-compass">
+                <h2>Compass</h2>
+                <blockquote>
+                  <p>Obtains the direction that the device is pointing.</p>
+                </blockquote>
+                <h4 class="help"><b>Toggle</b> to stop/start
+                  compass watch. <br/><b>Get Current</b> for one-time compass reading.</h4>
+                <div>
+                  Compass Heading: <b id="heading"></b>
+                </div>
+                <a class="btn deux" onclick="toggleCompass();">Toggle</a>
+                <a class="btn deux" onclick="getCurrentHeading();">Get Current</a>
+              </div>
+
+              <div class="api-div" id="api-geolocation">
+                <h2>Geolocation</h2>
+                <blockquote>
+                  <p>The <code>geolocation</code> object provides access to the device's GPS sensor.</p>
+                </blockquote>
+                <h4 class="help"><b>Toggle</b> to stop/start
+                  geolocation watch. <br/><b>Get Current</b> for one-time geolocation reading.</h4>
+                <a class="btn deux" onclick="toggleWatchPosition();">Toggle</a>
+                <a class="btn deux" onclick="getCurrentPosition();">Get Current</a>
+                <div class="result-block">
+                  <span id="cur_position"></span>
+                </div>
+                <img id="map" alt="Location Map"/>
+              </div>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div>    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="scripts/jquery.easing.min.js"></script> 
+    <script src="scripts/gnmenu.js"></script>
+    <script src="scripts/jquery.scrollTo.js"></script>
+    <script src="scripts/classie.js"></script>
+
+    <script>
+      new gnMenu( document.getElementById( 'gn-menu' ) );
+    </script>
+
+      <script type="text/javascript">
+        // api-geolocation
+        var getCurrentPosition = function() {
+          var map = document.getElementById('map');
+          var success = function(pos) {
+            var text = "<div>Latitude: " + pos.coords.latitude +
+                    "<br/>" + "Longitude: " + pos.coords.longitude + "<br/>" +
+                    "Accuracy: " + pos.coords.accuracy + "m<br/>" + "</div>";
+            document.getElementById('cur_position').innerHTML = text;
+            console.log(text);
+            map.style.display = 'block';
+            var mapwidth = 270;  // a mungy compromise between the 2 sizes
+            var mapheight = 210; // since we can't get w / h dynamically
+            map.src = "http://maps.googleapis.com/maps/api/staticmap?center=" +
+                    pos.coords.latitude + "," + pos.coords.longitude +
+                    "&zoom=14&size=" + mapwidth + "x" + mapheight + "&maptype=roadmap&markers=color:green%7C" +
+                    pos.coords.latitude + "," + pos.coords.longitude + "&sensor=false";
+          };
+          var fail = function(error) {
+            document.getElementById('cur_position').innerHTML = "Error getting geolocation: " + error.code;
+            console.log("Error getting geolocation: code=" + error.code + " message=" + error.message);
+          };
+
+          map.style.display = 'none';
+          document.getElementById('cur_position').innerHTML = "Getting geolocation . . .";
+          console.log("Getting geolocation . . .");
+          navigator.geolocation.getCurrentPosition(success, fail);
+        };
+
+        // api-geolocation Watch Position
+        var watchID = null;
+        function clearWatch() {
+          if (watchID !== null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+            document.getElementById('cur_position').innerHTML = "";
+            document.getElementById('map').style.display = 'none';
+          }
+        }
+        var wsuccess = function(pos) {
+          var map = document.getElementById('map');
+          document.getElementById('cur_position').innerHTML = "Watching geolocation . . .";
+          map.style.display = 'none';
+          var text = "<div>Latitude: " + pos.coords.latitude +
+                  " (watching)<br/>" + "Longitude: " + pos.coords.longitude + "<br/>" +
+                  "Accuracy: " + pos.coords.accuracy + "m<br/>" + "</div>";
+          document.getElementById('cur_position').innerHTML = text;
+          console.log(text);
+          map.style.display = 'block';
+          var mapwidth = 270;  // a mungy compromise between the 2 sizes
+          var mapheight = 210; // since we can't get w / h dynamically
+          map.src = "http://maps.googleapis.com/maps/api/staticmap?center=" +
+                  pos.coords.latitude + "," + pos.coords.longitude +
+                  "&zoom=13&size=" + mapwidth + "x" + mapheight + "&maptype=roadmap&markers=color:green%7C" +
+                  pos.coords.latitude + "," + pos.coords.longitude + "&sensor=false";
+        };
+        var wfail = function(error) {
+          document.getElementById('cur_position').innerHTML = "Error getting geolocation: " + error.code;
+          console.log("Error getting geolocation: code=" + error.code + " message=" + error.message);
+        };
+        var toggleWatchPosition = function() {
+          if (watchID) {
+            console.log("Stopped watching position");
+            clearWatch();  // sets watchID = null;
+          } else {
+            document.getElementById('map').style.display = 'none';
+            document.getElementById('cur_position').innerHTML = "Watching geolocation . . .";
+            console.log("Watching geolocation . . .");
+            var options = { frequency: 3000, maximumAge: 5000, timeout: 5000, enableHighAccuracy: true };
+            watchID = navigator.geolocation.watchPosition(wsuccess, wfail, options);
+          }
+        };
+
+
+        //====================================================================================
+        function roundNumber(num) {  // Helper function
+          var dec = 2;
+          var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+          return result;
+        }
+
+        // api-accelerometer
+        var accelerationWatch = null;
+        function updateAcceleration(acceleration) {
+          document.getElementById('x').innerHTML = roundNumber(acceleration.x);
+          document.getElementById('y').innerHTML = roundNumber(acceleration.y);
+          document.getElementById('z').innerHTML = roundNumber(acceleration.z);
+          document.getElementById('accel_timestamp').innerHTML = acceleration.timestamp;
+        }
+        function toggleAccel() {
+          if (accelerationWatch !== null) {
+            navigator.accelerometer.clearWatch(accelerationWatch);
+            updateAcceleration({
+              x : "",
+              y : "",
+              z : "",
+              timestamp: ""
+            });
+            accelerationWatch = null;
+          } else {
+            var options = {};
+            options.frequency = 1000;
+            accelerationWatch = navigator.accelerometer.watchAcceleration(
+                    updateAcceleration, function(ex) {
+                      alert("Accelerometer Error!");
+                    }, options);
+          }
+        }
+
+        function getAccel() {
+          if (accelerationWatch !== null) {
+            navigator.accelerometer.clearWatch(accelerationWatch);
+            updateAcceleration({
+              x : "",
+              y : "",
+              z : "",
+              timestamp: ""
+            });
+            accelerationWatch = null;
+          }
+          navigator.accelerometer.getCurrentAcceleration(
+                  updateAcceleration, function(ex) {
+                    alert("Accelerometer Error!");
+                  });
+        }
+
+        //========================================================================================
+        //api-compass
+        var compassWatch = null;
+
+        function updateHeading(h) {
+          document.getElementById('heading').innerHTML = h.magneticHeading;
+        }
+        function compassError(error) {
+          alert('Compass Error: ' + error.code);
+          document.getElementById('heading').innerHTML = "Error";
+        }
+        function toggleCompass() {
+          if (compassWatch !== null) {
+            navigator.compass.clearWatch(compassWatch);
+            compassWatch = null;
+            updateHeading({ magneticHeading : ""});
+          } else {
+            // Compass Options: Android: filter is not supported
+            var options = { frequency: 1000 };
+            compassWatch = navigator.compass.watchHeading(
+                    updateHeading, compassError, options);
+          }
+        }
+        function getCurrentHeading() {
+          if (compassWatch !== null) {
+            navigator.compass.clearWatch(compassWatch);
+            compassWatch = null;
+            updateHeading({ magneticHeading : ""});
+          }
+          navigator.compass.getCurrentHeading(updateHeading, compassError);
+        }
+      </script>
+  </body>
+
+</html>

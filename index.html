@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main">
+          <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper">
+              <div class="gn-scroller">
+                <ul class="gn-menu">
+                  <li class="gn-search-item">
+                    <input placeholder="Search" type="search" class="gn-search" id="search">
+                    <a class="gn-icon gn-icon-search"><span>Search</span></a>
+                  </li>
+                  <li><a href="about.html" class="gn-icon gn-icon-download">About</a></li>
+                </ul>
+              </div><!-- /gn-scroller -->
+            </nav>
+          </li>
+          <li><a href="index.html">Kinetic SOS</a></li>
+        </ul>
+    </div>
+
+    <div class="heading-about marginbot-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="section-heading">
+                        <br><br><br>
+                        <h2>Home</h2>
+                        <div id="content">
+                            <div class="api-div" id="api-accelerometer">
+                                <h2>Accelerometer</h2>
+                                <blockquote>
+                                    <p>Captures device motion in the x, y, and z direction.</p>
+                                </blockquote>
+                                <h4 class="help"><b>Toggle</b> to stop/start
+                                    accelerometer watch.<br/><b>Get Current</b> for one-time accelerometer reading.</h4>
+                                <span id="acceleration-x" class="value">null</span>,
+                                <span id="acceleration-y" class="value">null</span>,
+                                <span id="acceleration-z" class="value">null</span>)
+                                m/s<sup>2</sup>
+                                <p>
+                                    Interval: <span id="interval" class="value">0</span> milliseconds
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--
+        <div id="map-canvas"></div>
+        <div id="cab-result"></div>
+        <div id="chart-result"></div>
+
+        <div class="modal-content" style="position: fixed;bottom: 0;width: 99%;margin: 8px;">
+          <div class="modal-body">
+
+          </div>
+        </div>
+
+        <div id="footer">
+          <div class="input-group" style="display: block">
+            <input placeholder="What's your delivery destination?" type="text" class="gn-destination-selection" id="destination-selection">
+          </div>
+          <button type="button" class="btn btn-danger btn-lg btn-block" id="suggestion">Request Delivery guy</button>
+        </div>
+        -->
+
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/jquery.easing.min.js"></script> 
+    <script src="scripts/gnmenu.js"></script>
+    <script src="scripts/jquery.scrollTo.js"></script>
+    <script src="scripts/classie.js"></script>
+
+    <script type="text/javascript">
+      new gnMenu( document.getElementById( 'gn-menu' ) );
+        window.addEventListener('devicemotion', function(event) {
+               document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
+               document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
+               document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
+
+               document.getElementById('interval').innerHTML = event.interval;
+        });
+    </script>
+  </body>
+
+</html>
