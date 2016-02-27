@@ -92,15 +92,15 @@ function InitDeviceMonitoring() {
                rotationalData['tiltZ'] = [];
             }
 
-            accelerometerData['tiltX'].push({
+            rotationalData['tiltX'].push({
                'timestamp' : timenow,
                'value' : Math.round(event.beta)
             });
-            accelerometerData['tiltY'].push({
+            rotationalData['tiltY'].push({
                'timestamp' : timenow,
                'value' : Math.round(event.gamma)
             });
-            accelerometerData['tiltZ'].push({
+            rotationalData['tiltZ'].push({
                'timestamp' : timenow,
                'value' : Math.round(event.alpha)
             });
