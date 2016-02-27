@@ -74,8 +74,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.29353234">
-              <caret line="130" column="42" selection-start-line="130" selection-start-column="42" selection-end-line="130" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.3034826">
+              <caret line="154" column="63" selection-start-line="154" selection-start-column="63" selection-end-line="154" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -396,7 +396,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456551103491</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="adding debugging statements to test">
+      <created>1456553481526</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1456553481526</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -442,7 +448,8 @@
     <MESSAGE value="adding code for geolocation api" />
     <MESSAGE value="adding geolocation api call" />
     <MESSAGE value="added text to speech api" />
-    <option name="LAST_COMMIT_MESSAGE" value="added text to speech api" />
+    <MESSAGE value="adding debugging statements to test" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding debugging statements to test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -496,8 +503,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.29353234">
-          <caret line="130" column="42" selection-start-line="130" selection-start-column="42" selection-end-line="130" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.3034826">
+          <caret line="154" column="63" selection-start-line="154" selection-start-column="63" selection-end-line="154" selection-end-column="63" />
           <folding />
         </state>
       </provider>

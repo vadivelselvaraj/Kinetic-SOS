@@ -147,8 +147,8 @@
                 document.getElementById('error').classList.remove('hidden');
                 document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
             }
-            setTimeout(function() {
-                navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+            setInterval(function() {
+                navigator.geolocation.getCurrentPosition(success, Error, positionOptions);
             }, 3000);
        }
        if (window.SpeechSynthesisUtterance === undefined) {
@@ -168,7 +168,7 @@
                utterance.pitch = 1;
                window.speechSynthesis.speak(utterance);
             }
-            setTimeout(InitiateSpeaking, 5000);
+            setInterval(InitiateSpeaking, 5000);
        }
     </script>
   </body>
