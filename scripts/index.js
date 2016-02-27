@@ -49,7 +49,6 @@ function InitSocket() {
         // socket.onclose = function(event) {
         //    console.log('Client notified socket has closed',event);
         // };
-        */
     };
     clearSocketInterval = setInterval(openSocketAndSendMessage, 1000);
 }
