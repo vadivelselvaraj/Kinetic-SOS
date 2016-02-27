@@ -121,7 +121,7 @@
             var positionOptions = {
                enableHighAccuracy: true,
                timeout: 10 * 1000, // 10 seconds
-               maximumAge: 30 * 1000 // 30 seconds
+               maximumAge: 5 * 1000 // data can be 2 seconds old from cache
             };
 
             function success(position) {
@@ -135,7 +135,7 @@
                 document.getElementById('error').classList.remove('hidden');
                 document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
             }
-
+            navigator.geolocation.getCurrentPosition(success, error, positionOptions);
        }
     </script>
   </body>
