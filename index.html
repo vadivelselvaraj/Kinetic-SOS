@@ -43,15 +43,28 @@
                                 <blockquote>
                                     <p>Captures device motion in the x, y, and z direction.</p>
                                 </blockquote>
-                                <h4 class="help"><b>Toggle</b> to stop/start
-                                    accelerometer watch.<br/><b>Get Current</b> for one-time accelerometer reading.</h4>
-                                <span id="acceleration-x" class="value">null</span>,
+                                (<span id="acceleration-x" class="value">null</span>,
                                 <span id="acceleration-y" class="value">null</span>,
                                 <span id="acceleration-z" class="value">null</span>)
                                 m/s<sup>2</sup>
                                 <p>
                                     Interval: <span id="interval" class="value">0</span> milliseconds
                                 </p>
+                            </div>
+
+                            <div class="api-div" id="api-geolocation">
+                                <span id="g-unsupported" class="api-support hidden">geolocation not supported</span>
+                                <h2>Geolocation API</h2>
+                                <blockquote>
+                                    <p>Captures lat and long co-ordinates.</p>
+                                </blockquote>
+                                Your position is <span id="latitude" class="g-info">unavailable</span>° latitude,
+                                <span id="longitude" class="g-info">unavailable</span>° longitude (with an accuracy of
+                                <span id="position-accuracy" class="g-info">unavailable</span> meters)
+                                <p>
+                                    Data updated at <span id="timestamp" class="g-info">unavailable</span>
+                                </p>
+                                <span id="error" class="hidden"></span>
                             </div>
 
                         </div>
@@ -99,6 +112,30 @@
 
                    document.getElementById('interval').innerHTML = event.interval;
             });
+       }
+
+       if (!(window.navigator && window.navigator.geolocation)) {
+            document.getElementById('g-unsupported').classList.remove('hidden');
+       }
+       else {
+            var positionOptions = {
+               enableHighAccuracy: true,
+               timeout: 10 * 1000, // 10 seconds
+               maximumAge: 30 * 1000 // 30 seconds
+            };
+
+            function success(position) {
+               document.getElementById('latitude').innerHTML = position.coords.latitude;
+               document.getElementById('longitude').innerHTML = position.coords.longitude;
+               document.getElementById('position-accuracy').innerHTML = position.coords.accuracy;
+
+               document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
+            }
+            function Error(positionError) {
+                document.getElementById('error').classList.remove('hidden');
+                document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
+            }
+
        }
     </script>
   </body>
