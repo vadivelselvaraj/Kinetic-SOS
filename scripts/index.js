@@ -6,11 +6,10 @@ new gnMenu( document.getElementById( 'gn-menu' ) );
 var accelerometerData = [],
     gpsData = [],
     accelerometerDataCount = 0
-    gpsDataCount = 0;
+    gpsDataCount = 0,
+    socket;
 
 function openSocketAndSendMessage() {
-    var socket = new WebSocket('wss://run-east.att.io/74424ad1f0bab/3dcd5b89d66d/220da12746eb8cc/in/flow/ws/kinetic');
-
     // Open the socket
     socket.onopen = function(event) {
         console.log('Socket opened on client side',event);
@@ -39,9 +38,9 @@ function openSocketAndSendMessage() {
         $('#gpspollingrate').html(gpsDataCount);
     };
 }
-
-$.ready(function() {
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>dom is ready";
+document.addEventListener('deviceready', function() {
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready";
+    socket = new WebSocket('wss://run-east.att.io/74424ad1f0bab/3dcd5b89d66d/220da12746eb8cc/in/flow/ws/kinetic');
     setInterval(openSocketAndSendMessage, 100);
 });
 
@@ -133,8 +132,3 @@ else {
           navigator.vibrate(3000);
       }, 10000);
  }
-
-
-document.addEventListener('deviceready', function() {
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready";
-});
