@@ -81,6 +81,9 @@ function InitDeviceMonitoring() {
         document.getElementById('do-unsupported').classList.remove('hidden');
      } else {
         window.addEventListener('deviceorientation', function(event) {
+           // If socket isn't open yet, don't store data.
+           if(socket == null)
+            return;
            document.getElementById('beta').innerHTML = Math.round(event.beta);
            document.getElementById('gamma').innerHTML = Math.round(event.gamma);
            document.getElementById('alpha').innerHTML = Math.round(event.alpha);
@@ -111,6 +114,9 @@ function InitDeviceMonitoring() {
       document.getElementById('dm-unsupported').classList.remove('hidden');
     } else {
       window.addEventListener('devicemotion', function(event) {
+           // If socket isn't open yet, don't store data.
+           if(socket == null)
+            return;
              document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
              document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
              document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
@@ -150,7 +156,7 @@ function InitDeviceMonitoring() {
       var positionOptions = {
          enableHighAccuracy: true,
          timeout: 10 * 1000, // 10 seconds
-         maximumAge: 5 * 1000 // data can be 2 seconds old from cache
+         maximumAge: 5 * 1000 // data can be 5 seconds old from cache
       };
 
       function success(position) {
@@ -159,6 +165,10 @@ function InitDeviceMonitoring() {
          document.getElementById('position-accuracy').innerHTML = position.coords.accuracy;
 
          document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
+        // If socket isn't open yet, don't store data.
+        if(socket == null)
+         return;
+
          var timenow = getDateTime();
          if(!gpsData.hasOwnProperty('lat')) {
              gpsData['lat'] = [];
