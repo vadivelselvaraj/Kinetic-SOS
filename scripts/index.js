@@ -83,26 +83,19 @@ io = io.connect(),
 current_url = window.location.href;
 
 document.addEventListener('deviceready', function() {
-  var socket = new WebSocket('ws://' + ip + port);
-
-  // Open the socket
-  socket.onopen = function(event) {
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "socket connection opened.";
-    // Send an initial message
-    socket.send('I am the client and I\'m listening!');
-
-    // Listen for messages
-    socket.onmessage = function(event) {
-        console.log('Client received a message', event);
+    var sockjs_url = 'http://192.168.1.125:9999/echo';
+    var sockjs = new SockJS(sockjs_url);
+    $('#first input').focus();
+    var sockjsdiv  = $('#sockjs');
+    var print = function(m, p) {
+        p = (p === undefined) ? '' : JSON.stringify(p);
+        sockjsdiv.append($("<code>").text(m + ' ' + p));
+        sockjsdiv.append($("<br>"));
     };
-
-    // Listen for socket closes
-    socket.onclose = function(event) {
-        console.log('Client notified socket has closed',event);
-    };
-
-    // To close the socket....
-    //socket.close()
-
-  };
+    sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
+    sockjs.onmessage = function(e) {print('[.] message', e.data);};
+    sockjs.onclose   = function()  {print('[*] close');};
+    setInterval(function() {
+        sockjs.send( "i'm the client!!!!" );
+    }, 2000);
 });
