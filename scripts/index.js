@@ -85,13 +85,14 @@ current_url = window.location.href;
 document.addEventListener('deviceready', function() {
     var sockjs_url = 'http://192.168.1.125:9999/echo';
     var sockjs = new SockJS(sockjs_url);
-    $('#first input').focus();
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready and sockjs in action";
     var sockjsdiv  = $('#sockjs');
     var print = function(m, p) {
         p = (p === undefined) ? '' : JSON.stringify(p);
         sockjsdiv.append($("<code>").text(m + ' ' + p));
         sockjsdiv.append($("<br>"));
     };
+
     sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
     sockjs.onmessage = function(e) {print('[.] message', e.data);};
     sockjs.onclose   = function()  {print('[*] close');};
