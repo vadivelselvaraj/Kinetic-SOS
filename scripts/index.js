@@ -5,8 +5,10 @@ new gnMenu( document.getElementById( 'gn-menu' ) );
 
 var accelerometerData = {},
     gpsData = {},
-    accelerometerDataCount = 0
+    rotationalData = {},
+    accelerometerDataCount = 0,
     gpsDataCount = 0,
+    rotationalDataCount = 0,
     socket = null,
     clearSocketInterval = null;
 
@@ -19,6 +21,8 @@ function openSocketAndSendMessage() {
         msg = $.extend(msg, accelerometerData);
     if(gpsData != null && Object.keys(gpsData).length > 0)
         msg = $.extend(msg, gpsData);
+    if(rotationalData != null && Object.keys(rotationalData).length > 0)
+        msg = $.extend(msg, rotationalData);
 
     // Send the msg object as a JSON-formatted string(if there is at least one key in it) and clear the accelerometer buffer
     if(Object.keys(msg).length > 0) {
@@ -27,10 +31,12 @@ function openSocketAndSendMessage() {
 
     accelerometerData = {};
     gpsData = {};
+    rotationalData = {}
 
     // Also write the count of data to the page.
     $('#accelpollingrate').html(accelerometerDataCount);
     $('#gpspollingrate').html(gpsDataCount);
+    $('#rotationalpollingrate').html(gpsDataCount);
 }
 
 function InitSocket() {
@@ -71,6 +77,36 @@ document.addEventListener('deviceready', function() {
 });
 
 function InitDeviceMonitoring() {
+    if (!('ondeviceorientation' in window)) {
+        document.getElementById('do-unsupported').classList.remove('hidden');
+     } else {
+        window.addEventListener('deviceorientation', function(event) {
+           document.getElementById('beta').innerHTML = Math.round(event.beta);
+           document.getElementById('gamma').innerHTML = Math.round(event.gamma);
+           document.getElementById('alpha').innerHTML = Math.round(event.alpha);
+           document.getElementById('is-absolute').innerHTML = event.absolute ? "true" : "false";
+           var timenow = getDateTime();
+           if(!rotationalData.hasOwnProperty('tiltX')) {
+               rotationalData['tiltX'] = [];
+               rotationalData['tiltY'] = [];
+               rotationalData['tiltZ'] = [];
+            }
+
+            accelerometerData['tiltX'].push({
+               'timestamp' : timenow,
+               'value' : Math.round(event.beta)
+            });
+            accelerometerData['tiltY'].push({
+               'timestamp' : timenow,
+               'value' : Math.round(event.gamma)
+            });
+            accelerometerData['tiltZ'].push({
+               'timestamp' : timenow,
+               'value' : Math.round(event.alpha)
+            });
+            rotationalDataCount++;
+        });
+     }
     if (!('ondevicemotion' in window)) {
       document.getElementById('dm-unsupported').classList.remove('hidden');
     } else {
