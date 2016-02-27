@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="39b226c9-dd66-4d0b-8b30-98bde467b616" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/index.js" afterPath="$PROJECT_DIR$/scripts/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Kinetic-SOS.iws" />
@@ -61,21 +62,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56416464">
-              <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+            <state vertical-scroll-proportion="-9.708333">
+              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="10.645162">
-              <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+            <state vertical-scroll-proportion="2.9211822">
+              <caret line="127" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -143,8 +144,8 @@
         <option value="$PROJECT_DIR$/scripts/app.js" />
         <option value="$PROJECT_DIR$/config.xml" />
         <option value="$PROJECT_DIR$/sockjs.html" />
-        <option value="$PROJECT_DIR$/scripts/index.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/scripts/index.js" />
       </list>
     </option>
   </component>
@@ -557,7 +558,25 @@
       <option name="project" value="LOCAL" />
       <updated>1456596797785</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="remove twice added jquery min js lib">
+      <created>1456597143732</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1456597143732</updated>
+    </task>
+    <task id="LOCAL-00029" summary="modifying to use one socket connection">
+      <created>1456598113930</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1456598113930</updated>
+    </task>
+    <task id="LOCAL-00030" summary="modifying to use one socket connection 1">
+      <created>1456599275990</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1456599275990</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -595,9 +614,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Modifying project name and desc" />
-    <MESSAGE value="Modifying project name and desc 3" />
-    <MESSAGE value="Modifying project name and desc 4" />
     <MESSAGE value="adding unsupported detection" />
     <MESSAGE value="adding code for geolocation api" />
     <MESSAGE value="adding geolocation api call" />
@@ -620,7 +636,10 @@
     <MESSAGE value="test stuff" />
     <MESSAGE value="websocket to m2x api" />
     <MESSAGE value="fixing js file ordering" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing js file ordering" />
+    <MESSAGE value="remove twice added jquery min js lib" />
+    <MESSAGE value="modifying to use one socket connection" />
+    <MESSAGE value="modifying to use one socket connection 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifying to use one socket connection 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -688,6 +707,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.708333">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sockjs.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.8333335">
@@ -698,16 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.645162">
-          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56416464">
-          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+        <state vertical-scroll-proportion="2.9211822">
+          <caret line="127" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="1" />
           <folding />
         </state>
       </provider>

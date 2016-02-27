@@ -3,31 +3,40 @@ new gnMenu( document.getElementById( 'gn-menu' ) );
 * Socket communication
 */
 
-var accelerometerData = [],
-    gpsData = [],
+var accelerometerData = {},
+    gpsData = {},
     accelerometerDataCount = 0
     gpsDataCount = 0,
-    socket;
+    socket,
+    clearSocketInterval;
 
 function openSocketAndSendMessage() {
+    if(socket == null)
+        return;
     var datenow = new Date().getTime();
-    var msg = {
-        "accelerometer": accelerometerData,
-        "gps" : gpsData
-    };
+    var msg = {};
+    if(accelerometerData != null && keys(accelerometerData).length > 0)
+        msg = $.extend(msg, accelerometerData);
+    if(gpsData != null && keys(gpsData).length > 0)
+        msg = $.extend(msg, gpsData);
 
-    // Send the msg object as a JSON-formatted string and clear the accelerometer buffer
-    socket.send(JSON.stringify(msg));
-    accelerometerData = [];
-    gpsData = [];
+    // Send the msg object as a JSON-formatted string(if there is at least one key in it) and clear the accelerometer buffer
+    if(keys(msg).length > 0) {
+        socket.send(JSON.stringify(msg));
+    }
+
+    accelerometerData = {};
+    gpsData = {};
 
     // Also write the count of data to the page.
     $('#accelpollingrate').html(accelerometerDataCount);
     $('#gpspollingrate').html(gpsDataCount);
 }
 
-document.addEventListener('deviceready', function() {
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready";
+function InitSocket() {
+    // If socket is already initialized, skip processing further.
+    if(socket != null)
+        return;
     socket = new WebSocket('wss://run-east.att.io/74424ad1f0bab/3dcd5b89d66d/220da12746eb8cc/in/flow/ws/kinetic');
     socket.onopen = function(event) {
         console.log('Socket opened on client side',event);
@@ -41,8 +50,24 @@ document.addEventListener('deviceready', function() {
             console.log('Client notified socket has closed',event);
         };
     };
+    clearSocketInterval = setInterval(openSocketAndSendMessage, 1000);
+}
+
+function StopSendingData() {
+    if(socket != null) {
+        socket = null;
+        clearInterval(clearSocketInterval);
+    }
+}
+
+function getDateTime() {
+    return new Date();
+}
+
+document.addEventListener('deviceready', function() {
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready";
+    InitSocket();
     InitDeviceMonitoring();
-    setInterval(openSocketAndSendMessage, 1000);
 });
 
 function InitDeviceMonitoring() {
@@ -55,12 +80,18 @@ function InitDeviceMonitoring() {
              document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
 
              document.getElementById('interval').innerHTML = event.interval;
-             var timenow = new Date().getTime();
-             accelerometerData.push({
+             var timenow = getDateTime();
+             accelerometerData['accX'].push({
                 'timestamp' : timenow,
-                'x' : Math.round(event.acceleration.x),
-                'y' : Math.round(event.acceleration.y),
-                'z' : Math.round(event.acceleration.z)
+                'value' : Math.round(event.acceleration.x)
+             });
+             accelerometerData['accY'].push({
+                'timestamp' : timenow,
+                'value' : Math.round(event.acceleration.y)
+             });
+             accelerometerData['accZ'].push({
+                'timestamp' : timenow,
+                'value' : Math.round(event.acceleration.z)
              });
              accelerometerDataCount++;
       });
@@ -85,22 +116,28 @@ function InitDeviceMonitoring() {
          document.getElementById('position-accuracy').innerHTML = position.coords.accuracy;
 
          document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
-          var timenow = new Date().getTime();
-          gpsData.push({
+         var timenow = getDateTime();
+         gpsData['lat'].push({
              'timestamp' : timenow,
-             'latitude' : position.coords.latitude,
-             'longitude' : position.coords.longitude
-          });
-          gpsDataCount++;
+             'value' : position.coords.latitude
+         });
+        gpsData['long'].push({
+             'timestamp' : timenow,
+             'value' : position.coords.longitude
+         });
+
+         gpsDataCount++;
       }
 
       function Error(positionError) {
           document.getElementById('error').classList.remove('hidden');
           document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
       }
+
       navigator.geolocation.watchPosition(success, Error, positionOptions);
     }
 
+    /*
      if (navigator.TTS === undefined) {
           document.getElementById('ss-unsupported').classList.remove('hidden');
           document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis not supported";
@@ -131,4 +168,5 @@ function InitDeviceMonitoring() {
               navigator.vibrate(3000);
           }, 10000);
      }
+     */
 }

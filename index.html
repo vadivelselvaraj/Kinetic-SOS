@@ -92,17 +92,10 @@
                             <div id="debug"></div>
                             <div id="sockjs"></div>
 
-                            <div id="socket">
-                                <h2>Web socket</h2>
-                                <div></div>
-                                <form id="sendform">
-                                    <input autocomplete="off" type="text" id="ip" value="192.168.0.37" />
-                                    <input autocomplete="off" type="text" id="port" value="9999" />
-                                    <input autocomplete="off" value="Type here..." id="log" />
-                                    <input type="submit" value="hit to send">
-                                </form>
-                            </div>
-
+                            <div id="socketcontrols">
+                                <h2>Web socket controls</h2>
+                                <button type="button" onclick="InitSocket()">Start!</button>
+                                <button type="button" onclick="StopSendingData()">Stop!</button>
                             </div>
                     </div>
                 </div>
