@@ -1,4 +1,32 @@
 new gnMenu( document.getElementById( 'gn-menu' ) );
+/*
+* Socket communication
+*/
+var ip = '192.168.1.125', // node server ip
+port = ':8080',
+io = io.connect(),
+current_url = window.location.href;
+
+$.ready(function() {
+    var sockjs_url = 'http://192.168.1.125:9999/echo';
+    var sockjs = new SockJS(sockjs_url);
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready and sockjs in action";
+    var sockjsdiv  = $('#sockjs');
+    var print = function(m, p) {
+        p = (p === undefined) ? '' : JSON.stringify(p);
+        sockjsdiv.append($("<code>").text(m + ' ' + p));
+        sockjsdiv.append($("<br>"));
+    };
+
+    sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
+    sockjs.onmessage = function(e) {print('[.] message', e.data);};
+    sockjs.onclose   = function()  {print('[*] close');};
+    setInterval(function() {
+        sockjs.send( "i'm the client!!!!" );
+    }, 2000);
+});
+
+
 if (!('ondevicemotion' in window)) {
   document.getElementById('dm-unsupported').classList.remove('hidden');
 } else {
@@ -74,29 +102,6 @@ app.initialize();
       }, 10000);
  }
 
-/*
-* Socket communication
-*/
-var ip = '192.168.1.125', // node server ip
-port = ':8080',
-io = io.connect(),
-current_url = window.location.href;
 
 document.addEventListener('deviceready', function() {
-    var sockjs_url = 'http://192.168.1.125:9999/echo';
-    var sockjs = new SockJS(sockjs_url);
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready and sockjs in action";
-    var sockjsdiv  = $('#sockjs');
-    var print = function(m, p) {
-        p = (p === undefined) ? '' : JSON.stringify(p);
-        sockjsdiv.append($("<code>").text(m + ' ' + p));
-        sockjsdiv.append($("<br>"));
-    };
-
-    sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
-    sockjs.onmessage = function(e) {print('[.] message', e.data);};
-    sockjs.onclose   = function()  {print('[*] close');};
-    setInterval(function() {
-        sockjs.send( "i'm the client!!!!" );
-    }, 2000);
 });
