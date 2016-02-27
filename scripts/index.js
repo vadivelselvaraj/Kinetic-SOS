@@ -46,9 +46,10 @@ function InitSocket() {
         };
 
         // Listen for socket closes
-        socket.onclose = function(event) {
-            console.log('Client notified socket has closed',event);
-        };
+        // socket.onclose = function(event) {
+        //    console.log('Client notified socket has closed',event);
+        // };
+        */
     };
     clearSocketInterval = setInterval(openSocketAndSendMessage, 1000);
 }
@@ -125,8 +126,8 @@ function InitDeviceMonitoring() {
          document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
          var timenow = getDateTime();
          if(!gpsData.hasOwnProperty('lat')) {
-             accelerometerData['lat'] = [];
-             accelerometerData['long'] = [];
+             gpsData['lat'] = [];
+             gpsData['long'] = [];
          }
 
          gpsData['lat'].push({
