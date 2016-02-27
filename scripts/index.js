@@ -3,9 +3,7 @@ new gnMenu( document.getElementById( 'gn-menu' ) );
 * Socket communication
 */
 var ip = '192.168.1.125', // node server ip
-port = ':8080',
-io = io.connect(),
-current_url = window.location.href;
+port = ':8080';
 
 $.ready(function() {
     var sockjs_url = 'http://192.168.1.125:9999/echo';
