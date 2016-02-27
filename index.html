@@ -99,72 +99,10 @@
     <script src="scripts/gnmenu.js"></script>
     <script src="scripts/jquery.scrollTo.js"></script>
     <script src="scripts/classie.js"></script>
-    <script src="scripts/responsivevoice.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 
-    <script type="text/javascript">
-      new gnMenu( document.getElementById( 'gn-menu' ) );
-       if (!('ondevicemotion' in window)) {
-            document.getElementById('dm-unsupported').classList.remove('hidden');
-         } else {
-            window.addEventListener('devicemotion', function(event) {
-                   document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
-                   document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
-                   document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
-
-                   document.getElementById('interval').innerHTML = event.interval;
-            });
-       }
-
-       if (!(window.navigator && window.navigator.geolocation)) {
-            document.getElementById('g-unsupported').classList.remove('hidden');
-            document.getElementById('debug').innerHTML = "<br/>geolocation api not supported";
-       }
-       else {
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>geolocation supported";
-
-            var positionOptions = {
-               enableHighAccuracy: true,
-               timeout: 10 * 1000, // 10 seconds
-               maximumAge: 5 * 1000 // data can be 2 seconds old from cache
-            };
-
-            function success(position) {
-               document.getElementById('latitude').innerHTML = position.coords.latitude;
-               document.getElementById('longitude').innerHTML = position.coords.longitude;
-               document.getElementById('position-accuracy').innerHTML = position.coords.accuracy;
-
-               document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
-            }
-            function Error(positionError) {
-                document.getElementById('error').classList.remove('hidden');
-                document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'
-            }
-            setInterval(function() {
-                navigator.geolocation.getCurrentPosition(success, Error, positionOptions);
-            }, 3000);
-       }
-       if (window.responsiveVoice === undefined) {
-            document.getElementById('ss-unsupported').classList.remove('hidden');
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis not supported";
-       }
-       else {
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis supported";
-
-            function InitiateSpeaking() {
-               window.responsiveVoice.speak("Please turn off the notification");
-            }
-            setInterval(InitiateSpeaking, 5000);
-       }
-       if (navigator.vibrate === undefined) {
-            document.getElementById('v-unsupported').classList.remove('hidden');
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "Vibrator not supported";
-         } else {
-             document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>vibrator api supported";
-            setInterval( function() {
-                navigator.vibrate(3000);
-            }, 10000);
-         }
-    </script>
   </body>
 
 </html>
