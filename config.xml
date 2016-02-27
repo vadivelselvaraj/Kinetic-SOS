@@ -12,8 +12,12 @@
     <author href="http://phonegap.com" email="support@phonegap.com">
         Nivas
     </author>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/geolocation" />
+    <feature name="http://api.phonegap.com/1.0/media" />
 
-    <access origin="*" />
+    <access uri="*" subdomain="" />
 
     <gap:plugin name="org.apache.cordova.device-motion" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
