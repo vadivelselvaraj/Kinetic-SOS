@@ -74,6 +74,14 @@
                                     <p>Repeats 'Please turn off the notification' text every 5s.</p>
                                 </blockquote>
                             </div>
+
+                            <div class="api-div" id="api-vibration">
+                                <span id="v-unsupported" class="api-support hidden">Vibration API not supported</span>
+                                <h2>Vibration API</h2>
+                                <blockquote>
+                                    <p>Vibrates once at 10s in morse code.</p>
+                                </blockquote>
+                            </div>
                             <div id="debug"></div>
 
                         </div>
@@ -125,10 +133,10 @@
 
        if (!(window.navigator && window.navigator.geolocation)) {
             document.getElementById('g-unsupported').classList.remove('hidden');
-            document.getElementById('debug').innerHTML = "geolocation api not supported";
+            document.getElementById('debug').innerHTML = "<br/>geolocation api not supported";
        }
        else {
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "geolocation supported";
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>geolocation supported";
 
             var positionOptions = {
                enableHighAccuracy: true,
@@ -153,10 +161,10 @@
        }
        if (window.SpeechSynthesisUtterance === undefined) {
             document.getElementById('ss-unsupported').classList.remove('hidden');
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "speech synthesis supported";
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis not supported";
        }
        else {
-            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "speech synthesis supported";
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis supported";
 
             function InitiateSpeaking() {
                var utterance = new SpeechSynthesisUtterance();
@@ -169,6 +177,15 @@
             }
             setInterval(InitiateSpeaking, 5000);
        }
+       if (navigator.vibrate === undefined) {
+            document.getElementById('v-unsupported').classList.remove('hidden');
+            document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "Vibrator not supported";
+         } else {
+             document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>vibrator api supported";
+            setTimeout( function() {
+                navigator.vibrate([100,30,100,30,100,200,200,30,200,30,200,200,100,30,100,30,100]); // Vibrate 'SOS' in Morse.
+            }, 5000);
+         }
     </script>
   </body>
 
