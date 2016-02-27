@@ -51,6 +51,8 @@
                                 <p>
                                     Interval: <span id="interval" class="value">0</span> milliseconds
                                 </p>
+                                <p>Acceleration Polling rate: <span id="accelpollingrate"">0</span></p>
+
                             </div>
 
                             <div class="api-div" id="api-geolocation">
@@ -66,6 +68,7 @@
                                     Data updated at <span id="timestamp" class="g-info">unavailable</span>
                                 </p>
                                 <span id="error" class="hidden"></span>
+                                <p>GPS Polling rate: <span id="gpspollingrate"">0</span></p>
                             </div>
 
                             <div class="api-div" id="api-speechsynthesis">
@@ -85,8 +88,20 @@
                             </div>
 
 
+
                             <div id="debug"></div>
                             <div id="sockjs"></div>
+
+                            <div id="socket">
+                                <h2>Web socket</h2>
+                                <div></div>
+                                <form id="sendform">
+                                    <input autocomplete="off" type="text" id="ip" value="192.168.0.37" />
+                                    <input autocomplete="off" type="text" id="port" value="9999" />
+                                    <input autocomplete="off" value="Type here..." id="log" />
+                                    <input type="submit" value="hit to send">
+                                </form>
+                            </div>
 
                             </div>
                     </div>

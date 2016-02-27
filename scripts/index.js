@@ -3,24 +3,46 @@ new gnMenu( document.getElementById( 'gn-menu' ) );
 * Socket communication
 */
 
-$.ready(function() {
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>before calling sockjs";
-    var sockjs_url = 'http://192.168.0.37:9999/echo';
-    var sockjs = new SockJS(sockjs_url);
-    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready and sockjs in action";
-    var sockjsdiv  = $('#sockjs');
-    var print = function(m, p) {
-        p = (p === undefined) ? '' : JSON.stringify(p);
-        sockjsdiv.append($("<code>").text(m + ' ' + p));
-        sockjsdiv.append($("<br>"));
-    };
+var accelerometerData = [],
+    gpsData = [],
+    accelerometerDataCount = 0
+    gpsDataCount = 0;
 
-    sockjs.onopen    = function()  {print('[*] open', sockjs.protocol);};
-    sockjs.onmessage = function(e) {print('[.] message', e.data);};
-    sockjs.onclose   = function()  {print('[*] close');};
-    setInterval(function() {
-        sockjs.send( "i'm the client!!!!" );
-    }, 2000);
+function openSocketAndSendMessage() {
+    var socket = new WebSocket('wss://run-east.att.io/74424ad1f0bab/3dcd5b89d66d/220da12746eb8cc/in/flow/ws/kinetic');
+
+    // Open the socket
+    socket.onopen = function(event) {
+        console.log('Socket opened on client side',event);
+        var datenow = new Date().getTime();
+        var msg = {
+            "accelerometer": accelerometerData,
+            "gps" : gpsData
+        };
+
+        // Send the msg object as a JSON-formatted string.
+        socket.send(JSON.stringify(msg));
+        accelerometerData = [];
+        gpsData = [];
+
+        // Listen for messages
+        socket.onmessage = function(event) {
+            console.log('Client received a message',event);
+        };
+
+        // Listen for socket closes
+        socket.onclose = function(event) {
+            console.log('Client notified socket has closed',event);
+        };
+        // Also write the count of data to the page.
+        $('#accelpollingrate').html(accelerometerDataCount);
+        $('#gpspollingrate').html(gpsDataCount);
+    };
+}
+
+$.ready(function() {
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>dom is ready";
+    setInterval(openSocketAndSendMessage, 100);
 });
 
 
@@ -33,6 +55,14 @@ if (!('ondevicemotion' in window)) {
          document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
 
          document.getElementById('interval').innerHTML = event.interval;
+         var timenow = new Date().getTime();
+         accelerometerData.push({
+            'timestamp' : timenow,
+            'x' : Math.round(event.acceleration.x),
+            'y' : Math.round(event.acceleration.y),
+            'z' : Math.round(event.acceleration.z)
+         });
+         accelerometerDataCount++;
   });
 }
 
@@ -55,7 +85,15 @@ else {
      document.getElementById('position-accuracy').innerHTML = position.coords.accuracy;
 
      document.getElementById('timestamp').innerHTML = (new Date(position.timestamp)).toString();
+      var timenow = new Date().getTime();
+      gpsData.push({
+         'timestamp' : timenow,
+         'latitude' : position.coords.latitude,
+         'longitude' : position.coords.longitude
+      });
+      gpsDataCount++;
   }
+
   function Error(positionError) {
       document.getElementById('error').classList.remove('hidden');
       document.getElementById('error').innerHTML = 'Error: ' + positionError.message + '<br />'

@@ -37,16 +37,24 @@
 
 <div id="first" class="box">
     <div></div>
-    <form><input autocomplete="off" value="Type here..."></input></form>
+    <form id="sendform">
+         <input autocomplete="off" type="text" id="ip" value="192.168.0.37" />
+         <input autocomplete="off" type="text" id="port" value="9999" />
+        <input autocomplete="off" value="Type here..." id="log" />
+        <input type="submit" value="hit to send">
+    </form>
 </div>
 
 <script>
-        var sockjs_url = 'http://192.168.0.37:9999/echo';
+        var port = $('#port').val() || '9999';
+        var ip = $('#ip').val() || '192.168.0.37';
+        var sockjs_url = 'http://' + $.trim(ip) + ':' + $.trim(port) + '/echo';
+
         var sockjs = new SockJS(sockjs_url);
-        $('#first input').focus();
+        $('#log').focus();
         var div  = $('#first div');
-        var inp  = $('#first input');
-        var form = $('#first form');
+        var inp  = $('#log');
+        var form = $('#sendform');
         var print = function(m, p) {
             p = (p === undefined) ? '' : JSON.stringify(p);
             div.append($("<code>").text(m + ' ' + p));
@@ -58,6 +66,7 @@
         sockjs.onclose   = function()  {print('[*] close');};
         form.submit(function() {
             print('[ ] sending', inp.val());
+            console.log("submitting form");
             sockjs.send(inp.val());
             inp.val('');
             return false;
