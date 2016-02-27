@@ -7,8 +7,8 @@ var accelerometerData = {},
     gpsData = {},
     accelerometerDataCount = 0
     gpsDataCount = 0,
-    socket,
-    clearSocketInterval;
+    socket = null,
+    clearSocketInterval = null;
 
 function openSocketAndSendMessage() {
     if(socket == null)
