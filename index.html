@@ -38,6 +38,7 @@
                         <h2>Home</h2>
                         <div id="content">
                             <div class="api-div" id="api-accelerometer">
+                                <span id="dm-unsupported" class="api-support hidden">devicemotion event not supported</span>
                                 <h2>Accelerometer</h2>
                                 <blockquote>
                                     <p>Captures device motion in the x, y, and z direction.</p>
@@ -88,13 +89,17 @@
 
     <script type="text/javascript">
       new gnMenu( document.getElementById( 'gn-menu' ) );
-        window.addEventListener('devicemotion', function(event) {
-               document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
-               document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
-               document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
+       if (!('ondevicemotion' in window)) {
+            document.getElementById('dm-unsupported').classList.remove('hidden');
+         } else {
+            window.addEventListener('devicemotion', function(event) {
+                   document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
+                   document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
+                   document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
 
-               document.getElementById('interval').innerHTML = event.interval;
-        });
+                   document.getElementById('interval').innerHTML = event.interval;
+            });
+       }
     </script>
   </body>
 

@@ -113,3 +113,9 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+.api-support {
+    display: block;
+}
+.hidden {
+    display: none;
+}
