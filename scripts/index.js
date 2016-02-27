@@ -68,9 +68,6 @@ else {
   }, 3000);
 }
 
-// Initialize cordova.js so that cordova native plugins like speech synthesizer and vibrate can be used.
-app.initialize();
-
  if (navigator.TTS === undefined) {
       document.getElementById('ss-unsupported').classList.remove('hidden');
       document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis not supported";
@@ -104,4 +101,5 @@ app.initialize();
 
 
 document.addEventListener('deviceready', function() {
+    document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>device ready";
 });
