@@ -15,13 +15,13 @@ function openSocketAndSendMessage() {
         return;
     var datenow = new Date().getTime();
     var msg = {};
-    if(accelerometerData != null && keys(accelerometerData).length > 0)
+    if(accelerometerData != null && Object.keys(accelerometerData).length > 0)
         msg = $.extend(msg, accelerometerData);
-    if(gpsData != null && keys(gpsData).length > 0)
+    if(gpsData != null && Object.keys(gpsData).length > 0)
         msg = $.extend(msg, gpsData);
 
     // Send the msg object as a JSON-formatted string(if there is at least one key in it) and clear the accelerometer buffer
-    if(keys(msg).length > 0) {
+    if(Object.keys(msg).length > 0) {
         socket.send(JSON.stringify(msg));
     }
 
