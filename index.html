@@ -82,6 +82,8 @@
                                     <p>Vibrates once at 10s in morse code.</p>
                                 </blockquote>
                             </div>
+
+
                             <div id="debug"></div>
 
                         </div>
@@ -91,31 +93,13 @@
         </div>
     </div>
 
-        <!--
-        <div id="map-canvas"></div>
-        <div id="cab-result"></div>
-        <div id="chart-result"></div>
-
-        <div class="modal-content" style="position: fixed;bottom: 0;width: 99%;margin: 8px;">
-          <div class="modal-body">
-
-          </div>
-        </div>
-
-        <div id="footer">
-          <div class="input-group" style="display: block">
-            <input placeholder="What's your delivery destination?" type="text" class="gn-destination-selection" id="destination-selection">
-          </div>
-          <button type="button" class="btn btn-danger btn-lg btn-block" id="suggestion">Request Delivery guy</button>
-        </div>
-        -->
-
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script src="scripts/jquery.easing.min.js"></script> 
     <script src="scripts/gnmenu.js"></script>
     <script src="scripts/jquery.scrollTo.js"></script>
     <script src="scripts/classie.js"></script>
+    <script src="scripts/responsivevoice.js"></script>
 
     <script type="text/javascript">
       new gnMenu( document.getElementById( 'gn-menu' ) );
@@ -159,7 +143,7 @@
                 navigator.geolocation.getCurrentPosition(success, Error, positionOptions);
             }, 3000);
        }
-       if (window.SpeechSynthesisUtterance === undefined) {
+       if (window.responsiveVoice === undefined) {
             document.getElementById('ss-unsupported').classList.remove('hidden');
             document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis not supported";
        }
@@ -167,13 +151,7 @@
             document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>speech synthesis supported";
 
             function InitiateSpeaking() {
-               var utterance = new SpeechSynthesisUtterance();
-               utterance.text = "Please turn off the notification";
-               utterance.voice = "Google US English";
-               utterance.lang = "en-US";
-               utterance.rate = 1;
-               utterance.pitch = 1;
-               window.speechSynthesis.speak(utterance);
+               window.responsiveVoice.speak("Please turn off the notification");
             }
             setInterval(InitiateSpeaking, 5000);
        }
@@ -182,9 +160,9 @@
             document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "Vibrator not supported";
          } else {
              document.getElementById('debug').innerHTML = document.getElementById('debug').innerHTML + "<br/>vibrator api supported";
-            setTimeout( function() {
-                navigator.vibrate([100,30,100,30,100,200,200,30,200,30,200,200,100,30,100,30,100]); // Vibrate 'SOS' in Morse.
-            }, 5000);
+            setInterval( function() {
+                navigator.vibrate(3000);
+            }, 10000);
          }
     </script>
   </body>
